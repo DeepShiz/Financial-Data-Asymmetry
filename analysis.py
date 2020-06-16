@@ -1,11 +1,12 @@
 import math
 import pandas as pd
+import numpy as np 
 from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
-from sklearn.externals import joblib
+import joblib
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, accuracy_score, r2_score
-from ta import *
+import ta
 
 class TechnicalAnalysis:
     def __init__(self, data):
@@ -52,8 +53,8 @@ class TechnicalAnalysis:
 
         Return Type = pd.DataFrame
         '''
-        self.mfi = momentum.money_flow_index(self.data['High'], self.data['Low'], self.data['Close'], self.data['Total Trade Quantity'],n=14)
-        self.rsi = momentum.rsi(self.data['Close'])
+        self.mfi = ta.volume.money_flow_index(self.data['High'], self.data['Low'], self.data['Close'], self.data['Total Trade Quantity'],n=14)
+        self.rsi = ta.momentum.rsi(self.data['Close'])
         self.roc = self.ROC(n=126)
         self.cci = self.CCI(n=20)
         self.data['MFI'] = self.mfi
